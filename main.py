@@ -1,13 +1,13 @@
-# Importing the Keras libraries and packages
-
+# Importing libraries
 from keras.models import Sequential
 from keras.layers import Conv2D
 from keras.layers import MaxPooling2D
 from keras.layers import Flatten
 from keras.layers import Dense
+import numpy as np
+from keras.preprocessing import image
 
-# Initialising the CNN
-
+# Initialising Network
 classifier = Sequential()
 
 # Step 1 - Convolution
@@ -32,11 +32,11 @@ classifier.add(Flatten())
 classifier.add(Dense(units = 128, activation = 'softmax'))
 classifier.add(Dense(units = 1, activation = 'sigmoid'))
 
-# Compiling the CNN
+# Compiling the Network
 
 classifier.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
 
-# Fitting the CNN to the images
+# Fitting the Network to the images
 
 from keras.preprocessing.image import ImageDataGenerator
 train_datagen = ImageDataGenerator(rescale = 1./255,
@@ -63,8 +63,6 @@ classifier.fit_generator(training_set,
 
 #Making new predictions
 
-import numpy as np
-from keras.preprocessing import image
 test_image = image.load_img('single_prediction/cat_or_dog_1.jpg', target_size = (64, 64))
 test_image = image.img_to_array(test_image)
 test_image = np.expand_dims(test_image, axis = 0)
